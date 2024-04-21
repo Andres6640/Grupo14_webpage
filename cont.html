@@ -25,14 +25,24 @@
 
     <main>
         <h1>Contacto</h1>
-        <form>
-<!-- 
-        Aca van los campos de contacto con bootstrap (email validado por JS) 
-        Hay que linkear boostrap solo en el <head> de esta pagina
-
-
--->            
-        </form>
+        
+        <div class="container-fluid">
+            <form>
+                <div class="mb-3 mt-3">
+                    <input type="text" class="form-control" id="name" placeholder="Ingrese su nombre" name="name">
+                </div>
+            
+                <div class="mb-3 mt-3">
+                    <input type="text" class="form-control" id="email" placeholder="Ingrese su email" name="email">
+                </div>            
+                         
+                <div class="mb-3 mt-3">
+                    <textarea class="form-control" rows="5" id="message" name="message" placeholder="Ingrese su mensaje"></textarea>
+                </div> 
+                
+                <button type="submit" class="btn btn-primary">Enviar</button>                       
+            </form>  
+        </div>
     </main>
 
     <footer>
