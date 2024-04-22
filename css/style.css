@@ -28,7 +28,6 @@ footer {
 header {
     margin: 1rem;
     padding: 0.5rem;
-    border: 1px solid gray;
 }
 
 /* Se necesita esta clase para todo header no afectado por Bootstrap */
@@ -39,7 +38,6 @@ header {
     align-items: center;
     margin: 1rem;
     padding: 1rem;
-    border: 1px solid gray;
 }
 
 i {
