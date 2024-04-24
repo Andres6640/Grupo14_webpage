@@ -59,13 +59,13 @@ main {
     align-items: center;
 }
 
-nav > a {
+nav a {
     text-decoration: none;
     padding: 0 0.5rem;
     color: black;
 }
 
-nav > a:hover {
+nav a:hover {
     text-decoration: underline black 2px;
 }
 
