@@ -30,13 +30,16 @@ footer {
     width: 100%;
 }
 
+/* Uso la etiqueta <header> en la pagina que usa Bootstrap y la clase
+ * .header en el resto de las páginas. Tengo que hacer esto porque
+ * Bootstrap me bloquea el display:flex (Bootstrap usa flexbox internamente) 
+ * Del mismo modo, altera los parametros de padding del header y del logo */
+
 header {
     margin: 1rem;
     padding: 0.4rem;
     border: 1px solid gray;
 }
-
-/* Se necesita esta clase para todo header no afectado por Bootstrap */
 
 .header {
     display: flex;
