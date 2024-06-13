@@ -1,0 +1,253 @@
+/* styles.css */
+
+/* Inicialización ----------------------- */
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+:root {
+	--color-azul: #0F1F5B;
+	--color-celeste1: #60C7E9;
+	--color-celeste2: #6292D0;
+	--color-marron: #A52A2A;
+	--color-gris: #4D4D4D;
+	--color-texto: #E5E5E5;
+}
+
+@keyframes two-pi {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    color: var(--color-texto);
+    background-color: var(--color-gris);
+}
+
+
+/* Header ------------------------------- */
+
+header {
+    background-color: var(--color-azul);
+}
+
+#topbar {
+    background-color: var(--color-celeste2);
+    text-align: right;
+}
+
+#topbar div {
+    padding-right: 20px;
+}
+
+#topbar div a {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-size: small;
+    padding: 0 0.5rem;
+}
+
+#topbar a:hover {
+    color: navy;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 1.5rem 0;
+}
+
+nav a {
+    color: var(--color-texto);
+    padding: 0 0.5rem;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: var(--color-celeste1);
+}
+
+#logo {
+    position: relative;
+    &:hover{
+        animation: two-pi 0.7s infinite linear;
+    }
+}
+
+
+/* Main Index -------------------------------- */
+
+#mainIndex {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 750px;
+    align-items: center;
+    background-color: var(--color-gris);
+    background-image: url("../img/pantera-L-frente.jpg");
+    background-size: cover;
+    /*background-attachment: fixed;*/
+    background-position: center;
+}
+
+#mainIndex section {
+    text-align: center;
+}
+
+#mainIndex section h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+#mainIndex section h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+
+/* Main Historia ----------------------------- */
+
+#mainHistoria {
+    background-color: var(--color-gris);
+    padding: 1rem;
+    min-height: 750px;
+    text-align: justify;
+}
+
+
+/* Main Specs -------------------------------- */
+
+#mainSpecs {
+    padding: 1rem;
+    min-height: 750px;
+}
+
+table {
+    margin: auto;
+}
+
+table, th, td {
+    border: 1px solid var(--color-texto);
+    border-collapse: collapse;
+    padding: 5px 10px;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+    text-align: center;
+}
+
+th {
+    font-weight: 700;
+}
+
+
+/* Main Media -------------------------------- */
+
+#mainMedia {
+    padding: 1rem;
+    min-height: 750px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 10px;
+}
+
+.grid-container > div {
+    transition: transform 0.2s;
+}
+
+.grid-container > div:hover {
+    transform: scale(1.05);
+}
+
+.grid-container > div > img {
+    width: 100%;
+    cursor: pointer;
+}
+
+iframe {
+    width: 100%;
+    border: none;
+}
+
+
+/* Main Contacto ----------------------------- */
+
+#mainContacto {
+    padding: 1rem;
+    min-height: 750px;
+}
+
+
+/* Main Registro ----------------------------- */
+
+#mainRegistro {
+    padding: 1rem;
+    min-height: 750px;
+}
+
+
+/* Main Ingresar ----------------------------- */
+
+#mainIngresar {
+    padding: 1rem;
+    min-height: 750px;
+}
+
+
+/* Footer ------------------------------------ */
+
+footer {
+    background-color: var(--color-azul);
+    color: var(--color-celeste1);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+footer p {
+    font-size: small;
+    padding: 0.2rem 0;
+}
+
+.iconoFooter {
+    color: var(--color-celeste1);
+    font-size: 25px;
+}
+
+/* Small devices (phones, 480px and down)
+@media only screen and (max-width: 480px) {
+  .example {background: green;}
+}
+*/
+/* Medium devices (tablets, 768px and up)
+@media only screen and (min-width: 768px) {
+  .example {background: blue;}
+}
+*/
+/* Large devices (laptops/desktops, 1024px and up)
+@media only screen and (min-width:1024px) {
+  .example {background: orange;}
+}
+*/

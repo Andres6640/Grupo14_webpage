@@ -1,0 +1,13 @@
+Relesase 2
+==========
+
+- Nueva apariencia en tonos de azul y fondo gris
+- La animacion del logo es por CSS vanilla
+- Se agrega un panel sobre el header con los enlaces "Registrarse" e "Ingresar"
+- Se rediseña el footer
+- Se agregan enlaces a los iconos del footer
+- Se agregan tooltips a iconos
+- El header y el footer se cargan dinamicamente por JS (include.js)
+- La seccion main de cada pagina se carga dinamicamente por JS (main<Page>.js)
+- Se rediseña la portada (index.html)
+- Se agrega un efecto en los paneles de imagen de la Galeria activable con el raton
