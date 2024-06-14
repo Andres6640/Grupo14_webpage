@@ -103,7 +103,6 @@ nav a:hover {
     background-color: var(--color-gris);
     background-image: url("../img/pantera-L-frente.jpg");
     background-size: cover;
-    /*background-attachment: fixed;*/
     background-position: center;
 }
 
@@ -184,7 +183,7 @@ th {
 
 .grid-container > div > img {
     width: 100%;
-    cursor: pointer;
+    cursor: zoom-in;
 }
 
 iframe {
