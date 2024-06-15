@@ -54,10 +54,15 @@ videos.forEach(video => {
 });
 
 function showZoomBox(image) {
+    const zoomBox = document.createElement("div");
+    zoomBox.classList.add("zoom-modal");
+    zoomBox.innerHTML = "";
+    page.appendChild(zoomBox);
+
     const frameZoom = document.createElement("div");
-    frameZoom.classList.add("zoom-modal");
+    frameZoom.classList.add("frame-modal");
     frameZoom.innerHTML = "";
-    page.appendChild(frameZoom);
+    zoomBox.appendChild(frameZoom);
 
     const zoomClose = document.createElement("span");
     zoomClose.classList.add("zoom-modal-close");
@@ -79,8 +84,8 @@ function showZoomBox(image) {
 
     /* Captura el evento click del boton de cierre */
     zoomClose.addEventListener("click", () => {
-        frameZoom.style.display = "none";
+        zoomBox.style.display = "none";
     });
 
-    frameZoom.style.display = "block";
+    zoomBox.style.display = "block";
 }

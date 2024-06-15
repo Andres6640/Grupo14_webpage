@@ -196,6 +196,17 @@ iframe {
 .zoom-modal {
     display: none;
     position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.frame-modal {
+    position: fixed;
     color: var(--color-negro);
     background-color: var(--color-texto);
     z-index: 1;
@@ -203,7 +214,6 @@ iframe {
     top: 1rem;
     width: 95%;
     height: 95%;
-    overflow: auto;
 }
 
 .zoom-modal-close {
