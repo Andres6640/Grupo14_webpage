@@ -15,8 +15,10 @@
 	--color-azul: #0F1F5B;
 	--color-celeste1: #60C7E9;
 	--color-celeste2: #6292D0;
+    --color-gris: #4D4D4D;
+    --color-gris2: #AAAAAA;
 	--color-marron: #A52A2A;
-	--color-gris: #4D4D4D;
+	--color-negro: black;
 	--color-texto: #E5E5E5;
 }
 
@@ -189,6 +191,41 @@ th {
 iframe {
     width: 100%;
     border: none;
+}
+
+.zoom-modal {
+    display: none;
+    position: fixed;
+    color: var(--color-negro);
+    background-color: var(--color-texto);
+    z-index: 1;
+    left: 2.5%;
+    top: 1rem;
+    width: 95%;
+    height: 95%;
+    overflow: auto;
+}
+
+.zoom-modal-close {
+  color: var(--color-gris2);
+  float: right;
+  margin-right: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.zoom-modal-close:hover {
+    color: var(--color-azul);
+    cursor: pointer;
+}
+
+.zoom-content {
+    padding: 1rem;
+}
+
+.zoom-content > img {
+    width: 100%;
+    cursor: default;
 }
 
 

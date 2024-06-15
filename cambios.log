@@ -7,7 +7,8 @@ Relesase 2
 - Se rediseña el footer
 - Se agregan enlaces a los iconos del footer
 - Se agregan tooltips a iconos
-- El header y el footer se cargan dinamicamente por JS (include.js)
-- La seccion main de cada pagina se carga dinamicamente por JS (main<Page>.js)
+- El header y el footer se cargan por JS (include.js)
+- La seccion main de cada pagina se carga por JS (main<Page>.js)
 - Se rediseña la portada (index.html)
 - Se agrega un efecto en los paneles de imagen de la Galeria activable con el raton
+- Se agrega vista de zoom sobre las imagenes

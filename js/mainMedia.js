@@ -39,7 +39,7 @@ images.forEach(image => {
 
     /* Evento click para abrir imagen ampliada */
     frameImage.addEventListener("click", () => {
-        console.log(image);
+        showZoomBox(image);
     });
 });
 
@@ -52,3 +52,35 @@ videos.forEach(video => {
 
     container.appendChild(frameVideo);
 });
+
+function showZoomBox(image) {
+    const frameZoom = document.createElement("div");
+    frameZoom.classList.add("zoom-modal");
+    frameZoom.innerHTML = "";
+    page.appendChild(frameZoom);
+
+    const zoomClose = document.createElement("span");
+    zoomClose.classList.add("zoom-modal-close");
+    zoomClose.title = "Cerrar";
+    zoomClose.innerHTML = "&times;";
+    frameZoom.appendChild(zoomClose);
+
+    const zoomContent = document.createElement("div");
+    zoomContent.classList.add("zoom-content");
+    zoomContent.innerHTML = "";
+    frameZoom.appendChild(zoomContent);
+
+    const content = `
+        <h4>${image.title}</h4>
+        <img src="${image.src}" title="${image.title}" alt="${image.title}">
+    `;
+
+    zoomContent.innerHTML = content;
+
+    /* Captura el evento click del boton de cierre */
+    zoomClose.addEventListener("click", () => {
+        frameZoom.style.display = "none";
+    });
+
+    frameZoom.style.display = "block";
+}
