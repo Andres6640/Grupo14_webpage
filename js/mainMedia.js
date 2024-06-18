@@ -37,7 +37,7 @@ images.forEach(image => {
 
     container.appendChild(frameImage);
 
-    /* Evento click para abrir imagen ampliada */
+    /* Captura el evento click para abrir imagen ampliada */
     frameImage.addEventListener("click", () => {
         showZoomBox(image);
     });
@@ -54,22 +54,26 @@ videos.forEach(video => {
 });
 
 function showZoomBox(image) {
+    /* Contenedor modal y fondo de pantalla para zoomBox */
     const zoomBox = document.createElement("div");
     zoomBox.classList.add("zoom-modal");
     zoomBox.innerHTML = "";
     page.appendChild(zoomBox);
 
+    /* zoomBox */
     const frameZoom = document.createElement("div");
     frameZoom.classList.add("frame-modal");
     frameZoom.innerHTML = "";
     zoomBox.appendChild(frameZoom);
 
+    /* Boton de cierre (x) de zoommBox */
     const zoomClose = document.createElement("span");
     zoomClose.classList.add("zoom-modal-close");
     zoomClose.title = "Cerrar";
     zoomClose.innerHTML = "&times;";
     frameZoom.appendChild(zoomClose);
 
+    /* Contenido de zoomBox (imagen y su nombre) */
     const zoomContent = document.createElement("div");
     zoomContent.classList.add("zoom-content");
     zoomContent.innerHTML = "";
@@ -87,5 +91,6 @@ function showZoomBox(image) {
         zoomBox.style.display = "none";
     });
 
+    /* Hago visible a zoomBox */
     zoomBox.style.display = "block";
 }

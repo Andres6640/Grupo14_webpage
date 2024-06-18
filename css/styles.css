@@ -15,7 +15,7 @@
 	--color-azul: #0F1F5B;
 	--color-celeste1: #60C7E9;
 	--color-celeste2: #6292D0;
-    --color-gris: #4D4D4D;
+    --color-gris1: #4D4D4D;
     --color-gris2: #AAAAAA;
 	--color-marron: #A52A2A;
 	--color-negro: black;
@@ -37,7 +37,7 @@ a {
 
 body {
     color: var(--color-texto);
-    background-color: var(--color-gris);
+    background-color: var(--color-gris1);
 }
 
 
@@ -102,7 +102,7 @@ nav a:hover {
     width: 100%;
     min-height: 750px;
     align-items: center;
-    background-color: var(--color-gris);
+    background-color: var(--color-gris1);
     background-image: url("../img/pantera-L-frente.jpg");
     background-size: cover;
     background-position: center;
@@ -128,7 +128,7 @@ nav a:hover {
 /* Main Historia ----------------------------- */
 
 #mainHistoria {
-    background-color: var(--color-gris);
+    background-color: var(--color-gris1);
     padding: 1rem;
     min-height: 750px;
     text-align: justify;
@@ -254,6 +254,53 @@ iframe {
     min-height: 750px;
 }
 
+.container {
+    width: 30%;
+    margin:3rem auto;
+    padding: 1rem;
+    border-radius: 5px;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-azul);
+}
+
+input, select {
+    width: 100%;
+    margin-bottom: 1rem;
+    height: 40px;
+    padding: 0px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 2px solid var(--color-celeste1);
+    color: var(--color-texto);
+    background-color: var(--color-azul);
+    outline: none;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 2px solid var(--color-celeste1);
+    color: var(--color-texto);
+    background-color: var(--color-azul);
+    outline: none;
+}
+
+.boton {
+    color: var(--color-negro);
+    background-color: var(--color-celeste1);
+    cursor: pointer;
+}
+
+.mensaje {
+    color: var(--color-texto);
+    font-size: smaller;
+    padding-bottom: 1rem;
+}
 
 /* Main Ingresar ----------------------------- */
 
@@ -261,6 +308,7 @@ iframe {
     padding: 1rem;
     min-height: 750px;
 }
+
 
 
 /* Footer ------------------------------------ */
