@@ -13,10 +13,10 @@
     Contraseña
 */
 
-const models = [{value: "PL = text: "Pantera L"},
-                {value: "GT4 = text: "Pantera GT4"},
-                {value: "GTS = text: "Pantera GTS"},
-                {value: "PSI = text: "Pantera 90 Si"}
+const models = [{"value": "PL", "text": "Pantera L"},
+                {"value": "GT4", "text": "Pantera GT4"},
+                {"value": "GTS", "text": "Pantera GTS"},
+                {"value": "PSI", "text": "Pantera 90 Si"}
 ];
 
 const page = document.getElementById("mainRegistro");
@@ -103,6 +103,15 @@ buttonSubmit.type = "submit";
 buttonSubmit.value = "Registrarse";
 formRegistro.appendChild(buttonSubmit);
 
+/* Validación de campos del formulario */
+formRegistro.addEventListener('submit', (event) => {
+    if (!validateForm()) {
+       event.preventDefault(); // evita que el formulario se envíe si hay errores de validación
+    }
+});
+
+
+
 function getCountryList(combo) {
     /* API Docs: https://rapidapi.com/rmr-soft-rmr-soft-default/api/city-list */
     const url = 'https://city-list.p.rapidapi.com/api/getCountryList';
@@ -124,17 +133,20 @@ function getCountryList(combo) {
                 combo.appendChild(option);
             })
     })
+
+    const option = document.createElement("option");
+    option.value = "";
+    option.text = "País";
+    combo.options.add(option, 0);
 }
 
-
-
-
-
-
 function validateForm() {
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let message = document.getElementById("message").value;
+    let name = fieldName.value.trim();
+    let email = fieldEmail.value.trim();
+    let matricula = fieldMatricula.value.trim();
+    let ciudad = fieldCiudad.value.trim();
+    let password = fieldPassword.value.trim();
+    let pais = fieldPais.value.trim();
 
     if (name == "") {
         alert("El campo Nombre no puede estar vacío");
@@ -146,8 +158,23 @@ function validateForm() {
         return false;
     }
 
-    if (message == "") {
-        alert("El campo Mensaje no puede estar vacío");
+    if (matricula == "") {
+        alert("El campo Matricula no puede estar vacío");
+        return false;
+    }
+
+    if (ciudad == "") {
+        alert("El campo Ciudad no puede estar vacío");
+        return false;
+    }
+
+    if (password == "") {
+        alert("El campo Password no puede estar vacío");
+        return false;
+    }
+
+    if (pais === "Pais") {
+        alert("Tiene que seleccionar un país");
         return false;
     }
 

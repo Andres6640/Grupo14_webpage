@@ -49,9 +49,45 @@ fieldMensaje.placeholder = "Mensaje";
 fieldMensaje.required = true;
 formContacto.appendChild(fieldMensaje);
 
+/* Crea y agrega un párrafo */
+const aviso = document.createElement("p");
+aviso.classList.add("mensaje");
+aviso.innerHTML = "Todos los campos son obligatorios";
+formContacto.appendChild(aviso);
+
 /* Crea y agrega boton de envio */
 const buttonSubmit = document.createElement("input");
 buttonSubmit.classList.add("boton");
 buttonSubmit.type = "submit";
 buttonSubmit.value = "Enviar";
 formContacto.appendChild(buttonSubmit);
+
+/* Validación de campos del formulario */
+formContacto.addEventListener('submit', (event) => {
+    if (!validateForm()) {
+       event.preventDefault(); // evita que el formulario se envíe si hay errores de validación
+    }
+});
+
+function validateForm() {
+    let name = fieldName.value.trim();
+    let email = fieldEmail.value.trim();;
+    let message = fieldMensaje.value.trim();
+
+    if (name === "") {
+        alert("El campo Nombre y Apellido no puede estar vacío");
+        return false;
+    }
+
+    if (email == "") {
+        alert("El campo Email no puede estar vacío");
+        return false;
+    }
+
+    if (message === "") {
+        alert("El campo Mensaje no puede estar vacío");
+        return false;
+    }
+
+    return true;
+}
