@@ -12,3 +12,5 @@ Relesase 2
 - Se rediseña la portada (index.html)
 - Se agrega un efecto en los paneles de imagen de la Galeria activable con el raton
 - Se agrega vista de zoom sobre las imagenes
+- Se agregan formularios de contacto, registro y login
+- Se agrega validacion a los formularios de contacto, registro y login

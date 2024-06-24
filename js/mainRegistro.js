@@ -32,6 +32,23 @@ container.classList.add("container");
 container.innerHTML = "";
 page.appendChild(container);
 
+/* Crea y agrega barra de titulo */
+const titleBar = document.createElement("div");
+titleBar.classList.add("titleBar");
+container.appendChild(titleBar);
+
+/* Crea y agrega el titulo */
+const titulo = document.createElement("span");
+titulo.innerHTML = "Registrarse";
+titleBar.appendChild(titulo);
+
+/* Boton de cierre (x) de container */
+const btnClose = document.createElement("span");
+btnClose.classList.add("btn-close");
+btnClose.title = "Cerrar";
+btnClose.innerHTML = "&times;";
+titleBar.appendChild(btnClose);
+
 /* Crea y agrega el formulario de registro */
 const formRegistro = document.createElement("form");
 formRegistro.method = "post";
@@ -61,6 +78,11 @@ models.forEach(model => {
     option.value = model.value;
     fieldModelo.appendChild(option)
 });
+const option = document.createElement("option");
+option.value = "";
+option.text = "Modelo";
+fieldModelo.options.add(option, fieldModelo[0]);
+fieldModelo.selectedIndex = 0;
 formRegistro.appendChild(fieldModelo);
 
 /* Crea y agrega una caja para la Matricula */
@@ -110,7 +132,10 @@ formRegistro.addEventListener('submit', (event) => {
     }
 });
 
-
+/* Captura el evento click del boton de cierre */
+btnClose.addEventListener("click", () => {
+    container.style.display = "none";
+});
 
 function getCountryList(combo) {
     /* API Docs: https://rapidapi.com/rmr-soft-rmr-soft-default/api/city-list */
@@ -137,12 +162,13 @@ function getCountryList(combo) {
     const option = document.createElement("option");
     option.value = "";
     option.text = "País";
-    combo.options.add(option, 0);
+    combo.options.add(option, combo[0]);
 }
 
 function validateForm() {
     let name = fieldName.value.trim();
     let email = fieldEmail.value.trim();
+    let modelo = fieldModelo.value.trim();
     let matricula = fieldMatricula.value.trim();
     let ciudad = fieldCiudad.value.trim();
     let password = fieldPassword.value.trim();
@@ -155,6 +181,11 @@ function validateForm() {
 
     if (email == "") {
         alert("El campo Email no puede estar vacío");
+        return false;
+    }
+
+    if (modelo == "Modelo") {
+        alert("Tierne que seleccionar un modelo");
         return false;
     }
 

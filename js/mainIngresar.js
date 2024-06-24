@@ -10,7 +10,7 @@
 
 const page = document.getElementById("mainIngresar");
 
-/* Crea y agrega <h1>Login</h1> */
+/* Crea y agrega <h1>Ingresar</h1> */
 const pageTitle = document.createElement("h1");
 pageTitle.innerHTML = "Ingresar";
 page.appendChild(pageTitle);
@@ -20,6 +20,23 @@ const container = document.createElement("div");
 container.classList.add("container");
 container.innerHTML = "";
 page.appendChild(container);
+
+/* Crea y agrega barra de titulo */
+const titleBar = document.createElement("div");
+titleBar.classList.add("titleBar");
+container.appendChild(titleBar);
+
+/* Crea y agrega el titulo */
+const titulo = document.createElement("span");
+titulo.innerHTML = "Ingresar";
+titleBar.appendChild(titulo);
+
+/* Boton de cierre (x) de container */
+const btnClose = document.createElement("span");
+btnClose.classList.add("btn-close");
+btnClose.title = "Cerrar";
+btnClose.innerHTML = "&times;";
+titleBar.appendChild(btnClose);
 
 /* Crea y agrega el formulario de login */
 const formLogin = document.createElement("form");
@@ -59,6 +76,11 @@ formLogin.addEventListener('submit', (event) => {
     if (!validateForm()) {
        event.preventDefault(); // evita que el formulario se envíe si hay errores de validación
     }
+});
+
+/* Captura el evento click del boton de cierre */
+btnClose.addEventListener("click", () => {
+    container.style.display = "none";
 });
 
 function validateForm() {
