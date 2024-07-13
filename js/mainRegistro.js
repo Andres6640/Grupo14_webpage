@@ -106,17 +106,10 @@ fieldMatricula.placeholder = "Matrícula";
 fieldMatricula.required = true;
 formRegistro.appendChild(fieldMatricula);
 
-/* Crea una caja para subir la Imagen */
-const fieldImagen = document.createElement("input");
-fieldImagen.type = "file";
-fieldImagen.name = "imagen";
-fieldImagen.required = true;
-formRegistro.appendChild(fieldImagen);
-
 /* Crea y agrega una lista de paises */
 const fieldPais = document.createElement("select");
 fieldPais.required = true;
-getCountryList(fieldPais);
+getCountriesList(fieldPais);
 formRegistro.appendChild(fieldPais);
 
 /* Crea y agrega una caja para la Ciudad */
@@ -160,9 +153,7 @@ formRegistro.addEventListener('submit', (event) => {
     let ciudad = fieldCiudad.value.trim();
     let password = fieldPassword.value.trim();
     let pais = fieldPais.value.trim();
-    let imagen = fieldImagen.value.trim();
 
-    /* Para pantera_db */
     const body = {
         name: name,
         email: email,
@@ -172,17 +163,7 @@ formRegistro.addEventListener('submit', (event) => {
         city: ciudad,
         password: password,
         pais_cc: pais,
-        imagen: imagen
     }
-
-    /* Para vehicles_db
-    const body = {
-        name: name,
-        email: email,
-        city: ciudad,
-        country: pais,
-        password: password
-    }*/
 
     const options = createFetchOptions("POST", body);
     sendData(options);
@@ -197,27 +178,27 @@ btnClose.addEventListener("click", () => {
 
 /* Funciones ******************************************************************/
 
-function getCountryList(combo) {
-    /* API Docs: https://rapidapi.com/rmr-soft-rmr-soft-default/api/city-list */
-    const url = 'https://city-list.p.rapidapi.com/api/getCountryList';
-    const options = {
-	    method: 'GET',
-	    headers: {
-	    	'x-rapidapi-key': '433b7cc591mshc681782451c923fp1fc342jsn2abfdeba5968',
-	    	'x-rapidapi-host': 'city-list.p.rapidapi.com'
-	    }
-    };
+function getCountriesList(combo) {
+    url = `${API_SERVER}/countries`;
+    options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+        }
+    }
 
     fetch (url, options)
         .then (response => response.json())
         .then (data => {
-            data[0].forEach(datum => {
+            data.forEach(datum => {
                 const option = document.createElement("option");
-                option.value = datum.iso;
-                option.text = datum.cname;
+                option.value = datum.cc;
+                option.text = datum.nombre;
                 combo.appendChild(option);
             })
-    })
+         })
+        .catch (error => console.error("Error en acceso API:", error));
 
     /* Carga el placeholder del combo de paises y lo selecciona */
     const option = document.createElement("option");
@@ -280,23 +261,20 @@ function validateForm() {
 }
 
 function createFetchOptions(method, body) {
-    //const token = localStorage.getItem('token');
-
     return {
         method: method,
         headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            //authorization: token,
         },
         body: JSON.stringify(body),
     };
 }
 
 function sendData(options) {
-    const url = `${API_SERVER}/users/register`;
+    const urlUser = `${API_SERVER}/users/register`;
 
-    fetch (url, options)
+    fetch (urlUser, options)
         .then (response => response.json())
         .then (data => console.log("Nuevo usuario creado"))
         .catch (error => console.error("Error en acceso API:", error));

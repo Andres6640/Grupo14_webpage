@@ -106,13 +106,6 @@ fieldMatricula.placeholder = "Matrícula";
 fieldMatricula.required = true;
 formRegistro.appendChild(fieldMatricula);
 
-/* Crea una caja para subir la Imagen */
-const fieldImagen = document.createElement("input");
-fieldImagen.type = "file";
-fieldImagen.name = "imagen";
-fieldImagen.required = true;
-formRegistro.appendChild(fieldImagen);
-
 /* Crea y agrega una lista de paises */
 const fieldPais = document.createElement("select");
 fieldPais.required = true;
@@ -133,6 +126,11 @@ fieldPassword.placeholder = "Contraseña";
 fieldPassword.required = true;
 formRegistro.appendChild(fieldPassword);
 
+/* Crea y carga un campo oculto para mantener el ID del coche */
+const fieldHidden = document.createElement("input");
+fieldHidden.type = "hidden";
+formRegistro.appendChild(fieldHidden);
+
 /* Crea y agrega un párrafo */
 const mensaje = document.createElement("p");
 mensaje.classList.add("mensaje");
@@ -143,7 +141,7 @@ formRegistro.appendChild(mensaje);
 const buttonSubmit = document.createElement("input");
 buttonSubmit.classList.add("boton");
 buttonSubmit.type = "submit";
-buttonSubmit.value = "Guardar";
+buttonSubmit.value = "Actualizar";
 formRegistro.appendChild(buttonSubmit);
 
 getUserData();
@@ -162,18 +160,16 @@ formRegistro.addEventListener('submit', (event) => {
     let ciudad = fieldCiudad.value.trim();
     let password = fieldPassword.value.trim();
     let pais = fieldPais.value.trim();
-    let imagen = fieldImagen.value.trim();
 
     const body = {
-        name: name,
+        nombre: name,
         email: email,
         modelo: modelo,
         anio: anio,
         matricula: matricula,
         ciudad: ciudad,
         password: password,
-        pais_cc: pais,
-        imagen: imagen
+        pais_cc: pais
     }
 
     const options = createFetchOptions("PUT", body);
@@ -196,7 +192,6 @@ function getCountriesList(combo) {
         headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
-            //authorization: token,
         }
     }
 
@@ -228,7 +223,6 @@ function getUserData() {
         headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
-            //authorization: token,
         }
     }
 
@@ -238,29 +232,27 @@ function getUserData() {
             fieldName.value = data.nombre;
             fieldEmail.value = data.email;
             fieldCiudad.value = data.ciudad;
-            //fieldPassword.value =
             fieldPais.value = data.pais_cc;
          })
         .catch (error => console.error("Error en acceso API:", error));
 
-    /* Obtiene los datos del coche */
+    /* Obtiene los datos del coche (getCarByUserId) */
     const urlCar = `${API_SERVER}/cars/user/${user_id}`;
     const optionsCar = {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
             "accept": "application/json",
-            //authorization: token,
         }
     }
 
     fetch (urlCar, optionsCar)
         .then (response => response.json())
         .then (data => {
+            fieldHidden.value = data.id;
             fieldModelo.value = data.modelo;
             fieldAnio.value = data.anio;
             fieldMatricula.value = data.matricula;
-            fieldImagen.value = data.imagen;
          })
         .catch (error => console.error("Error en acceso API:", error));
 }
@@ -319,38 +311,45 @@ function validateForm() {
 }
 
 function createFetchOptions(method, body) {
-    //const token = localStorage.getItem('token');
-
     return {
         method: method,
         headers: {
             "Content-Type": "application/json",
             accept: "application/json",
-            //authorization: token,
         },
         body: JSON.stringify(body),
     };
 }
 
 function sendData(options) {
-/*
-          name: name,
-          email: email,
-        modelo: modelo,
-        anio: anio,
-        matricula: matricula,
-          ciudad: ciudad,
-          password: password,
-          pais_cc: pais,
-        imagen: imagen
-        */
     const user_id = window.sessionStorage.getItem("logged_user");
     const urlUser = `${API_SERVER}/users/${user_id}`;
 
     fetch (urlUser, options)
         .then (response => response.json())
-        .then (data => console.log("Nuevo usuario creado"))
-        .catch (error => console.error("Error en acceso API:", error));
+        .then (data => console.log("Usuario actualizado"))
+        .catch (error => console.error("Error en update user:", error));
 
-    const urlCar = `${API_SERVER}/cars/${car_id}`;
+    /* Actualiza los datos del coche */
+    const car_id = fieldHidden.value.trim();
+    const urlUpdateCar = `${API_SERVER}/cars/${car_id}`;
+    const optionsUpdateCar = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json",
+        },
+        body: JSON.stringify({
+            modelo: fieldModelo.value.trim(),
+            anio: fieldAnio.value.trim(),
+            matricula: fieldMatricula.value.trim(),
+            ciudad: fieldCiudad.value.trim(),
+            pais_cc: fieldPais.value.trim()
+        })
+    }
+
+    fetch (urlUpdateCar, optionsUpdateCar)
+        .then (response => response.json())
+        .then (data => console.log("Coche actualizado"))
+        .catch (error => console.error("Error en update car:", error));
 }
