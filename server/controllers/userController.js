@@ -65,7 +65,7 @@ const login = async (req, res) => {
 */
 
 const createUser = async (req, res) => {
-    const { name, email, model, year, plate, city, pais_cc, password, imagen } = req.body;
+    const { name, email, model, year, plate, city, pais_cc, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const sqlUser = "INSERT INTO usuarios (nombre, email, ciudad, pais_cc, password) VALUES (?, ?, ?, ?, ?)";
     const valuesUser = [name, email, city, pais_cc, hashedPassword];
@@ -77,10 +77,8 @@ const createUser = async (req, res) => {
             id: resUser.insertId
         });
 
-        const file_imagen = path.win32.basename(imagen);
-
-        const sqlCar = "INSERT INTO coches (modelo, anio, matricula, pais_cc, ciudad, imagen, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        const valuesCar = [model, year, plate, pais_cc, city, file_imagen, resUser.insertId];
+        const sqlCar = "INSERT INTO coches (modelo, anio, matricula, pais_cc, ciudad, usuario_id) VALUES (?, ?, ?, ?, ?, ?)";
+        const valuesCar = [model, year, plate, pais_cc, city, resUser.insertId];
 
         try {
             const [resCar] = await pool.query(sqlCar, valuesCar);
@@ -104,8 +102,8 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const id = req.params.id;
     const { nombre, email, ciudad, pais_cc } = req.body;
-    let sql = "UPDATE usuarios SET nombre = ?, email = ?, ciudad = ?, pais_cc = ?";
-    const values = [name, email, city, country];
+    let sql = "UPDATE usuarios SET nombre = ?, email = ?, ciudad = ?, pais_cc = ? WHERE id = ?";
+    const values = [nombre, email, ciudad, pais_cc, id];
 
     try {
         const [result] = await pool.query(sql, values);
@@ -113,8 +111,6 @@ const updateUser = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
         res.json({ message: "User updated successfully" });
-
-        /* Actualiza datos del coche */
 
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -129,6 +125,7 @@ const deleteUser = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
         res.json({ message: "User deleted successfully" });
+
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

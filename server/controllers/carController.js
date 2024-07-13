@@ -38,9 +38,9 @@ const getCarByUserId = async (req, res) => {
 };
 
 const createCar = async (req, res) => {
-    const {modelo, anio, matricula, pais_cc, ciudad, imagen} = req.body;
-    const sql = "INSERT INTO coches (modelo, anio, matricula, pais_cc, ciudad, imagen) VALUES (?, ?, ?, ?, ?, ?)";
-    const values = [modelo, anio, matricula, pais_cc, ciudad, imagen];
+    const {modelo, anio, matricula, pais_cc, ciudad} = req.body;
+    const sql = "INSERT INTO coches (modelo, anio, matricula, pais_cc, ciudad) VALUES (?, ?, ?, ?, ?)";
+    const values = [modelo, anio, matricula, pais_cc, ciudad];
 
     try {
         const [result] = await pool.query(sql, values);
@@ -54,9 +54,10 @@ const createCar = async (req, res) => {
 };
 
 const updateCar = async (req, res) => {
-    const {id} = req.params;
-    const {modelo, anio, matricula, pais_cc, ciudad, imagen} = req.body;
-    const sql = "UPDATE coches SET modelo = ?, anio = ?, matricula = ?, pais_cc = ?, ciudad = ?, imagen = ? WHERE id = ?";
+    const id = req.params.id;
+    const {modelo, anio, matricula, pais_cc, ciudad} = req.body;
+    const sql = "UPDATE coches SET modelo = ?, anio = ?, matricula = ?, pais_cc = ?, ciudad = ? WHERE id = ?";
+    const values = [modelo, anio, matricula, pais_cc, ciudad, id];
 
     try {
         const [result] = await pool.query(sql, values);
