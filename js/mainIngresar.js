@@ -8,6 +8,8 @@
         Contraseña
 */
 
+const API_SERVER = "http://localhost:3000/api";
+
 const page = document.getElementById("mainIngresar");
 
 /* Crea y agrega <h1>Ingresar</h1> */
@@ -76,12 +78,30 @@ formLogin.addEventListener('submit', (event) => {
     if (!validateForm()) {
        event.preventDefault(); // evita que el formulario se envíe si hay errores de validación
     }
+
+    /* Ya que los campos son válidos, envío la petición al server para validar el login */
+    let email = fieldEmail.value.trim();
+    let password = fieldPassword.value.trim();
+
+    const body = {
+        email: email,
+        password: password
+    }
+
+    const options = createFetchOptions("POST", body);
+    sendData(options);
+    container.style.display = "none";
+    event.preventDefault();
 });
 
 /* Captura el evento click del boton de cierre */
 btnClose.addEventListener("click", () => {
     container.style.display = "none";
+    window.location.replace("index.html");
 });
+
+
+/* Funciones *******************************************************************/
 
 function validateForm() {
     let email = fieldEmail.value.trim();
@@ -98,4 +118,33 @@ function validateForm() {
     }
 
     return true;
+}
+
+/* Funciones *****************************************************************/
+
+function createFetchOptions(method, body) {
+    //const token = localStorage.getItem('token');
+
+    return {
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            //authorization: token,
+        },
+        body: JSON.stringify(body),
+    };
+}
+
+function sendData(options) {
+    const url = `${API_SERVER}/users/login`;
+
+    fetch (url, options)
+        .then (response => response.json())
+        .then (data => {
+            console.log("Login valido")
+            sessionStorage.setItem("logged_user", data.id)
+            window.location.replace("perfil.html");
+        })
+        .catch (error => console.log("Error en acceso API:", error));
 }

@@ -1,55 +1,94 @@
 /* carController.js */
 
-const db = require("../db/db");
+const pool = require("../db/db");
 
-const getAllCars = (req, res) => {
-    const sql = "SELECT * FROM coches";
-    db.query(sql, (err, results) => {
-        if (err) throw err;
+const getAllCars = async (req, res) => {
+    try {
+        const [results] = await pool.query('SELECT * FROM coches');
         res.json(results);
-    });
+    } catch (err) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-const getCarById = (req, res) => {
-    const {id} = req.params;
-    const sql = "SELECT * FROM coches WHERE id = ?";
-    db.query(sql, [id], (err, result) => {
-        if (err) throw err;
-        res.json(result);
-    });
+const getCarById = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const [results] = await pool.query('SELECT * FROM coches WHERE id = ?', [id]);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Car not found' });
+        }
+        res.json(results[0]);
+    } catch (err) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-const createCar = (req, res) => {
+const getCarByUserId = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const [results] = await pool.query('SELECT * FROM coches WHERE usuario_id = ?', [id]);
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Car not found' });
+        }
+        res.json(results[0]);
+    } catch (err) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const createCar = async (req, res) => {
     const {modelo, anio, matricula, pais_cc, ciudad, imagen} = req.body;
     const sql = "INSERT INTO coches (modelo, anio, matricula, pais_cc, ciudad, imagen) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(sql, [modelo, anio, matricula, pais_cc, ciudad, imagen], (err, result) => {
-        if (err) throw err;
-        res.json({message: "Coche creado", carId: result.insertId});
-    });
+    const values = [modelo, anio, matricula, pais_cc, ciudad, imagen];
+
+    try {
+        const [result] = await pool.query(sql, values);
+        res.json({
+            message: 'Car created successfully',
+            carId: result.insertId
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-const updateCar = (req, res) => {
+const updateCar = async (req, res) => {
     const {id} = req.params;
     const {modelo, anio, matricula, pais_cc, ciudad, imagen} = req.body;
     const sql = "UPDATE coches SET modelo = ?, anio = ?, matricula = ?, pais_cc = ?, ciudad = ?, imagen = ? WHERE id = ?";
-    db.query(sql, [modelo, anio, matricula, pais_cc, ciudad, imagen, id], (err, result) => {
-        if (err) throw err;
-        res.json({message: "Coche actualizado"});
-    });
+
+    try {
+        const [result] = await pool.query(sql, values);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Car not found' });
+        }
+        res.json({ message: 'Car updated successfully' });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-const deleteCar = (req, res) => {
-    const {id} = req.params;
-    const sql = "DELETE FROM coches WHERE id = ?";
-    db.query(sql, [id], (err, result) => {
-        if (err) throw err;
-        res.json({message: "Coche eliminado"});
-    });
+const deleteCar = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const [result] = await pool.query('DELETE FROM coches WHERE id = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Car not found' });
+        }
+        res.json({ message: 'Car deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 module.exports = {
     getAllCars,
     getCarById,
+    getCarByUserId,
     createCar,
     updateCar,
     deleteCar

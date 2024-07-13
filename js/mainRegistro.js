@@ -7,11 +7,14 @@
     Nombre y apellido
     Email
     Modelo
+    Año
     Matricula
     Pais
     Ciudad
     Contraseña
 */
+
+const API_SERVER = "http://localhost:3000/api";
 
 const models = [{"value": "PL", "text": "Pantera L"},
                 {"value": "GT4", "text": "Pantera GT4"},
@@ -52,7 +55,7 @@ titleBar.appendChild(btnClose);
 /* Crea y agrega el formulario de registro */
 const formRegistro = document.createElement("form");
 formRegistro.method = "post";
-//formRegistro.action = "";
+formRegistro.enctype = "multipart/form-data";
 container.appendChild(formRegistro);
 
 /* Crea y agrega una caja de texto para el Nombre y Apellido */
@@ -78,12 +81,23 @@ models.forEach(model => {
     option.value = model.value;
     fieldModelo.appendChild(option)
 });
+
+/* Carga el placeholder del combo de modelos y lo selecciona */
 const option = document.createElement("option");
 option.value = "";
 option.text = "Modelo";
 fieldModelo.options.add(option, fieldModelo[0]);
 fieldModelo.selectedIndex = 0;
 formRegistro.appendChild(fieldModelo);
+
+/* Crea y carga el Año del coche*/
+const fieldAnio = document.createElement("input");
+fieldAnio.type = "number";
+fieldAnio.placeholder = "Año";
+fieldAnio.min = 1971;
+fieldAnio.max = 1993;
+fieldAnio.required = true;
+formRegistro.appendChild(fieldAnio);
 
 /* Crea y agrega una caja para la Matricula */
 const fieldMatricula = document.createElement("input");
@@ -92,7 +106,14 @@ fieldMatricula.placeholder = "Matrícula";
 fieldMatricula.required = true;
 formRegistro.appendChild(fieldMatricula);
 
-/* Crea y agrega una lista de paises, leyendo una API */
+/* Crea una caja para subir la Imagen */
+const fieldImagen = document.createElement("input");
+fieldImagen.type = "file";
+fieldImagen.name = "imagen";
+fieldImagen.required = true;
+formRegistro.appendChild(fieldImagen);
+
+/* Crea y agrega una lista de paises */
 const fieldPais = document.createElement("select");
 fieldPais.required = true;
 getCountryList(fieldPais);
@@ -130,12 +151,51 @@ formRegistro.addEventListener('submit', (event) => {
     if (!validateForm()) {
        event.preventDefault(); // evita que el formulario se envíe si hay errores de validación
     }
+
+    let name = fieldName.value.trim();
+    let email = fieldEmail.value.trim();
+    let modelo = fieldModelo.value.trim();
+    let anio = fieldAnio.value.trim();
+    let matricula = fieldMatricula.value.trim();
+    let ciudad = fieldCiudad.value.trim();
+    let password = fieldPassword.value.trim();
+    let pais = fieldPais.value.trim();
+    let imagen = fieldImagen.value.trim();
+
+    /* Para pantera_db */
+    const body = {
+        name: name,
+        email: email,
+        model: modelo,
+        year: anio,
+        plate: matricula,
+        city: ciudad,
+        password: password,
+        pais_cc: pais,
+        imagen: imagen
+    }
+
+    /* Para vehicles_db
+    const body = {
+        name: name,
+        email: email,
+        city: ciudad,
+        country: pais,
+        password: password
+    }*/
+
+    const options = createFetchOptions("POST", body);
+    sendData(options);
+    event.preventDefault();
 });
 
 /* Captura el evento click del boton de cierre */
 btnClose.addEventListener("click", () => {
     container.style.display = "none";
+    window.location.replace("index.html");
 });
+
+/* Funciones ******************************************************************/
 
 function getCountryList(combo) {
     /* API Docs: https://rapidapi.com/rmr-soft-rmr-soft-default/api/city-list */
@@ -150,15 +210,16 @@ function getCountryList(combo) {
 
     fetch (url, options)
         .then (response => response.json())
-        .then(data => {
+        .then (data => {
             data[0].forEach(datum => {
                 const option = document.createElement("option");
-                option.value = datum.iso3;
+                option.value = datum.iso;
                 option.text = datum.cname;
                 combo.appendChild(option);
             })
     })
 
+    /* Carga el placeholder del combo de paises y lo selecciona */
     const option = document.createElement("option");
     option.value = "";
     option.text = "País";
@@ -169,6 +230,7 @@ function validateForm() {
     let name = fieldName.value.trim();
     let email = fieldEmail.value.trim();
     let modelo = fieldModelo.value.trim();
+    let anio = fieldAnio.value.trim();
     let matricula = fieldMatricula.value.trim();
     let ciudad = fieldCiudad.value.trim();
     let password = fieldPassword.value.trim();
@@ -185,7 +247,12 @@ function validateForm() {
     }
 
     if (modelo == "Modelo") {
-        alert("Tierne que seleccionar un modelo");
+        alert("Tiene que seleccionar un modelo");
+        return false;
+    }
+
+    if (anio == "Año") {
+        alert("Tiene que seleccionar o tipear el año");
         return false;
     }
 
@@ -210,4 +277,27 @@ function validateForm() {
     }
 
     return true;
+}
+
+function createFetchOptions(method, body) {
+    //const token = localStorage.getItem('token');
+
+    return {
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+            accept: "application/json",
+            //authorization: token,
+        },
+        body: JSON.stringify(body),
+    };
+}
+
+function sendData(options) {
+    const url = `${API_SERVER}/users/register`;
+
+    fetch (url, options)
+        .then (response => response.json())
+        .then (data => console.log("Nuevo usuario creado"))
+        .catch (error => console.error("Error en acceso API:", error));
 }

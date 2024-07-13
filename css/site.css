@@ -222,11 +222,11 @@ iframe {
 }
 
 .zoom-modal-close {
-  color: var(--color-gris-claro);
-  float: right;
-  margin-right: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
+    color: var(--color-gris-claro);
+    float: right;
+    margin-right: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .zoom-modal-close:hover {
@@ -244,17 +244,25 @@ iframe {
 }
 
 .btn-close {
-  color: var(--color-gris-claro);
-  float: right;
- // margin-right: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
+    color: var(--color-gris-claro);
+    float: right;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .btn-close:hover {
     color: var(--color-celeste1);
     cursor: pointer;
 }
+
+
+/* Main Club ----------------------------- */
+
+#mainClub {
+    padding: 1rem;
+    min-height: var(--min-height);
+}
+
 
 /* Main Contacto ----------------------------- */
 

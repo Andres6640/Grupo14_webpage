@@ -1,13 +1,14 @@
 /* carsRoutes.js */
 
 const express = require("express");
-const carRouter = express.Router();
+const router = express.Router();
 const carController = require("../controllers/carController");
 
-carRouter.get("/", carController.getAllCars);
-carRouter.get("/:id", carController.getCarById);
-carRouter.post("/", carController.createCar);
-carRouter.put("/:id", carController.updateCar);
-carRouter.delete("/:id", carController.deleteCar);
+router.get("/", carController.getAllCars);
+router.get("/:id", carController.getCarById);
+router.get("/user/:id", carController.getCarByUserId);
+router.post("/", carController.createCar);
+router.put("/:id", carController.updateCar);
+router.delete("/:id", carController.deleteCar);
 
-module.exports = carRouter;
+module.exports = router;

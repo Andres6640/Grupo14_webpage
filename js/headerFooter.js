@@ -1,10 +1,19 @@
 /* headerFooter.js */
 
+let logged_user = window.sessionStorage.getItem("logged_user");
+let user_menu = "";
+
+if (logged_user !== null) {
+    user_menu = '<a href="perfil.html">Mi perfil</a>';
+    upper_menu = `<a href='javascript:sessionStorage.clear();window.location.replace("index.html");'>Salir</a>`;
+} else {
+    upper_menu = '<a href="registro.html">Registrarse</a><a href="ingresar.html">Ingresar</a>';
+}
+
 const headerJS = `
     <div id="topbar">
         <div>
-            <a href="registro.html">Registrarse</a>
-            <a href="ingresar.html">Ingresar</a>
+            ${upper_menu}
         </div>
     </div>
     <nav>
@@ -13,6 +22,7 @@ const headerJS = `
             <a href="historia.html">Historia</a>
             <a href="specs.html">Performance</a>
             <a href="media.html">Galeria</a>
+            ${user_menu}
             <a href="contacto.html">Contacto</a>
         </div>
     </nav>`;
